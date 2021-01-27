@@ -82,6 +82,35 @@ class TestRepairsMaintenanceSpending(_IndicatorTestCase):
                 "ref": {
                     "title": "Circular 71",
                     "url": "http://mfma.treasury.gov.za/Circulars/Pages/Circular71.aspx"
-                }
+                },
+                "last_year": 2019,
+                "formula": {
+                    "text": "= Repairs and maintenance expenditure / (Property, Plant and Equipment + Investment Property)",
+                    "actual": [
+                        "=", 
+                        {
+                            "cube": "capital",
+                            "cube_name": "Capital",
+                            "item_codes": ["4100"],
+                            "amount_type": "AUDA",
+                        },
+                        "/",
+                        "(",
+                        {
+                            "cube": "bsheet",
+                            "cube_name": "Balance Sheet",
+                            "item_codes": ["1300"],
+                            "amount_type": "AUDA",
+                        },
+                        "+",
+                        {
+                            "cube": "bsheet",
+                            "cube_name": "Balance Sheet",
+                            "item_codes": ["1401"],
+                            "amount_type": "AUDA",
+                        },
+                        ")",
+                    ],
+                },
             },
         )

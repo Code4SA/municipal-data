@@ -91,4 +91,24 @@ class CurrentRatio(IndicatorCalculator):
             "result_type": cls.result_type,
             "values": values,
             "ref": api_data.references["circular71"],
+            "last_year": api_data.years[0],
+            "formula": {
+                "text": "= Current Assets / Current Liabilities",
+                "actual": [
+                    "=", 
+                    {
+                        "cube": "bsheet",
+                        "cube_name": "Balance Sheet",
+                        "item_codes": ["2150"],
+                        "amount_type": "AUDA",
+                    },
+                    "/",
+                    {
+                        "cube": "bsheet",
+                        "cube_name": "Balance Sheet",
+                        "item_codes": ["1600"],
+                        "amount_type": "AUDA",
+                    },
+                ],
+            },
         }

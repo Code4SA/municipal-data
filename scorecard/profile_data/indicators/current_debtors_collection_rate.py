@@ -97,4 +97,28 @@ class CurrentDebtorsCollectionRate(IndicatorCalculator):
             "result_type": cls.result_type,
             "values": values,
             "ref": api_data.references["mbrr"],
+            "last_year": api_data.years[0],
+            "formula": {
+                "text": "= Collected Revenue / Billed Revenue",
+                "actual": [
+                    "=", 
+                    {
+                        "cube": "cflow",
+                        "cube_name": "Cash Flow",
+                        "item_codes": [
+                            "3010", "3030", "3040", "3050", "3060", "3070", "3100",
+                        ],
+                        "amount_type": "AUDA",
+                    },
+                    "/",
+                    {
+                        "cube": "incexp",
+                        "cube_name": "Income & Expenditure",
+                        "item_codes": [
+                            "0200", "0300", "0400", "0500", "0600", "0800", "0900", "1000",
+                        ],
+                        "amount_type": "AUDA",
+                    },
+                ],
+            },
         }

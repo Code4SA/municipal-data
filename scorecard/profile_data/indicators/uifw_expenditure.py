@@ -80,4 +80,23 @@ class UIFWExpenditure(IndicatorCalculator):
             "result_type": cls.result_type,
             "values": values,
             "ref": api_data.references["circular71"],
+            "last_year": api_data.years[0],
+            "formula": {
+                "text": "= Unauthorised, Irregular, Fruitless and Wasteful Expenditure / Actual Operating Expenditure",
+                "actual": [
+                    "=", 
+                    {
+                        "cube": "uifw",
+                        "cube_name": "Unauthorised, Irregular, Fruitless and Wasteful Expenditure",
+                        "item_codes": ["irregular", "fruitless", "unauthorised"],
+                    },
+                    "/",
+                    {
+                        "cube": "incexp",
+                        "cube_name": "Income & Expenditure",
+                        "item_codes": ["4600"],
+                        "amount_type": "AUDA",
+                    },
+                ],
+            },
         }

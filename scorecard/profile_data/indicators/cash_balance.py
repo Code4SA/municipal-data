@@ -71,4 +71,18 @@ class CashBalance(IndicatorCalculator):
             "result_type": cls.result_type,
             "values": values,
             "ref": api_data.references["solgf"],
+            "last_year": api_data.years[0],
+            "formula": {
+                "text": "= Cash available at year end",
+                "actual": [
+                    "=", 
+                    {
+                        "cube": "cflow",
+                        "cube_name": "Cash Flow",
+                        "item_codes": ["4200"],
+                        "amount_type": "AUDA",
+                    }
+                ],
+            },
         }
+

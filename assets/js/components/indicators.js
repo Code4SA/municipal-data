@@ -11,6 +11,17 @@ const indicatorMetricClass = {
   "": ".indicator-metric--no-status",
 };
 
+function insertSpaces(array) {
+  let result = [];
+  array.forEach((o, i, a) => {
+    result.push(o);
+    if (i !== a.length) {
+      result.push('&nbsp;');
+    }
+  });
+  return result;
+}
+
 function comparePeriod( a, b ) {
   if ( a.period < b.period ){
     return -1;
@@ -43,6 +54,7 @@ export class IndicatorSection {
     this._initAverageButtons();
     this._initComparisonButtons();
 
+    this.initCalculation();
     this.initSectionPeriod();
     this.initMetric();
 
@@ -54,6 +66,63 @@ export class IndicatorSection {
 
   formatMetric(value) {
     return formatForType(this.sectionData.result_type, value);
+  }
+
+  initCalculation() {
+    const geo_code = this.geography.geo_code;
+    const last_year = this.sectionData.last_year;
+    // Render the calculation reference
+    const referenceData = this.sectionData.ref;
+    const $referenceEl = this.$element.find(".indicator-calculation__reference");
+    if ($referenceEl.length && referenceData) {
+      const $el = $('<a></a>');
+      $el.attr('href', referenceData.url);
+      $el.text(referenceData.title);
+      $referenceEl.append($el);
+    }
+    // Render the formula data
+    const formulaData = this.sectionData.formula;
+    if (formulaData) {
+      const textData = formulaData.text;
+      const $textEl = this.$element.find(".indicator-calculation__formula-text");
+      if ($textEl.length && textData) {
+          $textEl.text(textData);
+      }
+      const actualData = formulaData.actual;
+      const $actualEl = this.$element.find(".indicator-calculation__formula-actual");
+      console.log(actualData);
+      if ($actualEl.length && actualData) {
+        const components = Object.values(actualData).map((data) => {
+          if (typeof data === 'string') {
+            return data;
+          } else {
+            const $el = $('<a></a>');
+            let params = {};
+            let text = '';
+            // Set the query parameters
+            params['municipalities'] = geo_code;
+            params['year'] = last_year;
+            params['items'] = data.item_codes;
+            if (data.amount_type) {
+              params['amountType'] = data.amount_type;
+            }
+            // Generate the text
+            text += `[${data.cube_name}]`;
+            text += ` item code ${data.item_codes.join(',')}`;
+            if (data.amount_type) {
+              text += `, ${data.amount_type}`;
+            }
+            params = new URLSearchParams(params).toString();
+            const url = `/api/table/${data.cube}/?${params}`;
+            $el.text(text);
+            $el.attr('href', url);
+            return $el;
+          }
+        })
+        // Append the components to the element
+        $actualEl.append(insertSpaces(components));
+      }
+    }
   }
 
   initSectionPeriod() {

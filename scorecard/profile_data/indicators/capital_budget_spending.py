@@ -101,4 +101,37 @@ class CapitalBudgetSpending(IndicatorCalculator):
             "result_type": cls.result_type,
             "values": values,
             "ref": api_data.references["overunder"],
+            "last_year": api_data.years[0],
+            "formula": {
+                "text": "= ((Actual Capital Expenditure - Budgeted Capital Expenditure) / Budgeted Capital Expenditure) * 100",
+                "actual": [
+                    "=", 
+                    "(",
+                    "(",
+                    {
+                        "cube": "captial",
+                        "cube_name": "Capital",
+                        "item_codes": ["4100"],
+                        "amount_type": "AUDA",
+                    },
+                    "-",
+                    {
+                        "cube": "capital",
+                        "cube_name": "Capital",
+                        "item_codes": ["4100"],
+                        "amount_type": "ADJB",
+                    },
+                    ")",
+                    "/",
+                    {
+                        "cube": "capital",
+                        "cube_name": "Capital",
+                        "item_codes": ["4100"],
+                        "amount_type": "ADJB",
+                    },
+                    ")",
+                    "*",
+                    "100",
+                ],
+            },
         }

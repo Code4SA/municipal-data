@@ -91,4 +91,24 @@ class LiquidityRatio(IndicatorCalculator):
             "result_type": cls.result_type,
             "values": values,
             "ref": api_data.references["mbrr"],
+            "last_year": api_data.years[0],
+            "formula": {
+                "text": "= (Cash + Call Investment Deposits) / Current Liabilities",
+                "actual": [
+                    "=", 
+                    {
+                        "cube": "bsheet",
+                        "cube_name": "Balance Sheet",
+                        "item_codes": ["1800", "2200"],
+                        "amount_type": "AUDA",
+                    },
+                    "/",
+                    {
+                        "cube": "bsheet",
+                        "cube_name": "Balance Sheet",
+                        "item_codes": ["1600"],
+                        "amount_type": "AUDA",
+                    },
+                ],
+            },
         }

@@ -110,4 +110,33 @@ class RepairsMaintenanceSpending(IndicatorCalculator):
             "result_type": cls.result_type,
             "values": values,
             "ref": api_data.references["circular71"],
+            "last_year": api_data.years[0],
+            "formula": {
+                "text": "= Repairs and maintenance expenditure / (Property, Plant and Equipment + Investment Property)",
+                "actual": [
+                    "=", 
+                    {
+                        "cube": "capital",
+                        "cube_name": "Capital",
+                        "item_codes": ["4100"],
+                        "amount_type": "AUDA",
+                    },
+                    "/",
+                    "(",
+                    {
+                        "cube": "bsheet",
+                        "cube_name": "Balance Sheet",
+                        "item_codes": ["1300"],
+                        "amount_type": "AUDA",
+                    },
+                    "+",
+                    {
+                        "cube": "bsheet",
+                        "cube_name": "Balance Sheet",
+                        "item_codes": ["1401"],
+                        "amount_type": "AUDA",
+                    },
+                    ")",
+                ],
+            },
         }

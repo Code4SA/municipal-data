@@ -74,6 +74,25 @@ class TestUIFWExpenditure(_IndicatorTestCase):
                 "ref": {
                     "title": "Circular 71",
                     "url": "http://mfma.treasury.gov.za/Circulars/Pages/Circular71.aspx"
-                }
+                },
+                "last_year": 2019,
+                "formula": {
+                    "text": "= Unauthorised, Irregular, Fruitless and Wasteful Expenditure / Actual Operating Expenditure",
+                    "actual": [
+                        "=", 
+                        {
+                            "cube": "uifw",
+                            "cube_name": "Unauthorised, Irregular, Fruitless and Wasteful Expenditure",
+                            "item_codes": ["irregular", "fruitless", "unauthorised"],
+                        },
+                        "/",
+                        {
+                            "cube": "incexp",
+                            "cube_name": "Income & Expenditure",
+                            "item_codes": ["4600"],
+                            "amount_type": "AUDA",
+                        },
+                    ],
+                },
             },
         )

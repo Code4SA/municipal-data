@@ -98,4 +98,33 @@ class OperatingBudgetSpending(IndicatorCalculator):
             "result_type": cls.result_type,
             "values": values,
             "ref": api_data.references["overunder"],
+            "last_year": api_data.years[0],
+            "formula": {
+                "text": "= (Actual Operating Expenditure - Budget Operating Expenditure) / Budgeted Operating Expenditure",
+                "actual": [
+                    "=", 
+                    "(",
+                    {
+                        "cube": "incexp",
+                        "cube_name": "Income & Expenditure",
+                        "item_codes": ["4600"],
+                        "amount_type": "AUDA",
+                    },
+                    "-",
+                    {
+                        "cube": "incexp",
+                        "cube_name": "Income & Expenditure",
+                        "item_codes": ["4600"],
+                        "amount_type": "ADJB",
+                    },
+                    ")",
+                    "/",
+                    {
+                        "cube": "incexp",
+                        "cube_name": "Income & Expenditure",
+                        "item_codes": ["4600"],
+                        "amount_type": "ADJB",
+                    },
+                ],
+            },
         }

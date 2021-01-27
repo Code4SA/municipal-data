@@ -74,6 +74,35 @@ class TestOperatingBudgetSpending(_IndicatorTestCase):
                 "ref": {
                     "title": "Over and under spending reports to parliament",
                     "url": "http://mfma.treasury.gov.za/Media_Releases/Reports%20to%20Parliament/Pages/default.aspx"
-                }
+                },
+                "last_year": 2019,
+                "formula": {
+                    "text": "= (Actual Operating Expenditure - Budget Operating Expenditure) / Budgeted Operating Expenditure",
+                    "actual": [
+                        "=", 
+                        "(",
+                        {
+                            "cube": "incexp",
+                            "cube_name": "Income & Expenditure",
+                            "item_codes": ["4600"],
+                            "amount_type": "AUDA",
+                        },
+                        "-",
+                        {
+                            "cube": "incexp",
+                            "cube_name": "Income & Expenditure",
+                            "item_codes": ["4600"],
+                            "amount_type": "ADJB",
+                        },
+                        ")",
+                        "/",
+                        {
+                            "cube": "incexp",
+                            "cube_name": "Income & Expenditure",
+                            "item_codes": ["4600"],
+                            "amount_type": "ADJB",
+                        },
+                    ],
+                },
             },
         )

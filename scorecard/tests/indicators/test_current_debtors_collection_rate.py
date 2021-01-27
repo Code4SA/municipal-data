@@ -86,6 +86,30 @@ class TestCurrentDebtorsCollectionRate(_IndicatorTestCase):
                 "ref": {
                     "title": "Municipal Budget and Reporting Regulations",
                     "url": "http://mfma.treasury.gov.za/RegulationsandGazettes/Municipal%20Budget%20and%20Reporting%20Regulations/Pages/default.aspx"
-                }
+                },
+                "last_year": 2019,
+                "formula": {
+                    "text": "= Collected Revenue / Billed Revenue",
+                    "actual": [
+                        "=", 
+                        {
+                            "cube": "cflow",
+                            "cube_name": "Cash Flow",
+                            "item_codes": [
+                                "3010", "3030", "3040", "3050", "3060", "3070", "3100",
+                            ],
+                            "amount_type": "AUDA",
+                        },
+                        "/",
+                        {
+                            "cube": "incexp",
+                            "cube_name": "Income & Expenditure",
+                            "item_codes": [
+                                "0200", "0300", "0400", "0500", "0600", "0800", "0900", "1000",
+                            ],
+                            "amount_type": "AUDA",
+                        },
+                    ],
+                },
             }
         )

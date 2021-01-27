@@ -92,4 +92,28 @@ class CashCoverage(IndicatorCalculator):
             "result_type": cls.result_type,
             "values": values,
             "ref": api_data.references["solgf"],
+            "last_year": api_data.years[0],
+            "formula": {
+                "text": "= Cash available at year end / Operating Expenditure per month",
+                "actual": [
+                    "=", 
+                    {
+                        "cube": "cflow",
+                        "cube_name": "Cash Flow",
+                        "item_codes": ["4200"],
+                        "amount_type": "AUDA",
+                    },
+                    "/",
+                    "(",
+                    {
+                        "cube": "incexp",
+                        "cube_name": "Income & Expenditure",
+                        "item_codes": ["4600"],
+                        "amount_type": "ADJB",
+                    },
+                    "/",
+                    "12",
+                    ")",
+                ],
+            },
         }
